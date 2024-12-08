@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/style.css">
+    <title>医生主页 - 医疗管理系统</title>
+</head>
+<body>
+<header>
+    <ul id="header">
+        <li class="nav-item">
+            <a href="#"><img src="/svg/apple.svg" alt="medical logo" /></a>
+            <div class="nav-content">
+                <p>医生主页</p>
+            </div>
+        </li>
+
+        <li class="nav-item">
+            <a href="#">填写病历</a>
+            <div class="nav-content">
+                <p>为患者记录诊断信息、治疗方案和药品使用情况</p>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a href="#">病历查询</a>
+            <div class="nav-content">
+                <p>查询以往的病历记录</p>
+            </div>
+        </li>
+    </ul>
+</header>
+
+<section class="section1">
+    <div class="background" style="background-image: url(/img/10.jpg)"></div>
+
+    <div class="top__title">
+        <h1>挂号患者列表</h1>
+        <h3>查看当天所有挂号患者并进行处理</h3>
+    </div>
+
+    <!-- 动态渲染挂号患者 -->
+    <table>
+        <thead>
+        <tr>
+            <th>挂号ID</th>
+            <th>患者姓名</th>
+            <th>挂号时间</th>
+            <th>诊疗时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="appointment : ${appointments}">
+            <td th:text="${appointment.appointmentId}">挂号ID</td>
+            <td th:text="${appointment.patient.username}">患者姓名</td>
+            <td th:text="${appointment.appointmentTime}">挂号时间</td>
+            <td th:text="${appointment.scheduledTime ?: '未安排'}">诊疗时间</td>
+            <td>
+                <form th:action="@{/doctor/appointments/schedule}" method="post">
+                    <input type="hidden" name="appointmentId" th:value="${appointment.appointmentId}" />
+                    <label th:for="'scheduledTime'">诊疗时间:</label>
+                    <input type="datetime-local" th:id="'scheduledTime'" th:name="'scheduledTime'" />
+                    <button type="submit">安排</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+
+<section class="section2">
+    <div class="background" style="background-image: url(/img/11.jpg)"></div>
+
+    <div class="top__title">
+        <h1>填写病历</h1>
+        <h3>为患者记录诊断信息、治疗方案和药品使用情况</h3>
+        <div class="top__title--links">
+            <a href="#">填写病历 <img src="/svg/apple.svg" alt="" /></a>
+        </div>
+    </div>
+</section>
+
+<section class="section3">
+    <div class="background" style="background-image: url(/img/13.jpg)"></div>
+
+    <div class="top__title">
+        <h1>病历查询</h1>
+        <h3>查询并查看患者的以往病历记录</h3>
+        <div class="top__title--links">
+            <a href="#">查询病历 <img src="/svg/apple.svg" alt="" /></a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer__wrapper">
+        <ul></ul>
+        <div class="footer__links">
+            <div class="footer__links--column">
+                <div class="footer__links--column-title">医生管理</div>
+                <a href="#">挂号患者列表</a>
+                <a href="#">填写病历</a>
+                <a href="#">病历查询</a>
+            </div>
+
+            <div class="footer__links--column">
+                <div class="footer__links--column-title">关于我们</div>
+                <a href="#">公司介绍</a>
+                <a href="#">隐私政策</a>
+                <a href="#">联系我们</a>
+            </div>
+        </div>
+
+        <div class="footer__more">
+            更多服务信息，请访问我们的官网或拨打客服热线：15117259614。
+        </div>
+
+        <div class="footer__copyright">
+            <p>Copyright © 2024 王泽宇医疗管理系统. 保留所有权利。</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
